@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://your_database_user:your_database_password@db:5432/your_database_name
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - miniquiz-net
+
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mini_quiz
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: luthfi12
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - miniquiz-net
+
+volumes:
+  pgdata:
+
+networks:
+  miniquiz-net:
